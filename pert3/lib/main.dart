@@ -6,9 +6,25 @@ void main() {
   runApp(const MyApp());
 }
 
-List<ItemModel> wishlists = [
-  
+List<ItemModel> itemList = [
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci piring", 10000),
+  ItemModel("Sabun", "Buat mandi", 10000),
+  ItemModel("Sabun", "Cuci", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
+  ItemModel("Sabun", "Cuci muka", 10000),
 ];
+
+List<ItemModel> wishlists = [];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

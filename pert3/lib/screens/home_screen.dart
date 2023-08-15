@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pert3/components/form_bottom_sheet.dart';
 import 'package:pert3/main.dart';
 import 'package:pert3/models/item_model.dart';
 import 'package:pert3/screens/wishlist_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  final _data = [
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci piring", 10000),
-    ItemModel("Sabun", "Buat mandi", 10000),
-    ItemModel("Sabun", "Cuci", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-    ItemModel("Sabun", "Cuci muka", 10000),
-  ];
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-  HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +26,31 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.heart_broken),
+            icon: const Icon(
+              Icons.heart_broken,
+              color: Colors.red,
+            ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          ItemModel model = await showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: const FormBottomSheet(),
+              );
+            },
+          );
+          setState(() {
+            itemList.add(model);
+          });
+        },
+        child: const Icon(Icons.add),
       ),
       body: SafeArea(
         // LayoutBuilder(
@@ -58,12 +68,12 @@ class HomeScreen extends StatelessWidget {
         //     }
         //   },
         child: ListView.builder(
-          itemCount: _data.length,
+          itemCount: itemList.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                if (!wishlists.contains(_data[index])) {
-                  wishlists.add(_data[index]);
+                if (!wishlists.contains(itemList[index])) {
+                  wishlists.add(itemList[index]);
                 }
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -80,15 +90,15 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_data[index].title),
+                    Text(itemList[index].title),
                     const SizedBox(
                       height: 8,
                     ),
-                    Text(_data[index].description),
+                    Text(itemList[index].description),
                     const SizedBox(
                       height: 8,
                     ),
-                    Text("Rp${_data[index].price}"),
+                    Text("Rp${itemList[index].price}"),
                   ],
                 ),
               ),
@@ -98,17 +108,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _makeResponsiveLayout() {
-  //   const width = MediaQuery.of(context).size.width;
-  //   const orientation = MediaQuery.of(context).orientation;
-
-  //   if (width < 1290) {
-  //     return Container(); //
-  //   } else if (width < 720 ) {
-  //     return Container();//
-  //   } else if (width < 420) {
-  //     return ListView();
-  //   }
-  // }
 }
